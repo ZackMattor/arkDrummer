@@ -1,0 +1,58 @@
+.container {
+  width: 637px;
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none;
+}
+
+body {
+  background: #aaa;
+}
+
+#header {
+  background: #ccc;
+  padding: 25px;
+}
+
+.frame {
+  display: inline-block;
+  width: 50px;
+  margin-left: 10px;
+}
+
+.drum-cell {
+  display: inline-block;
+  background: #8bb8ea;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.frame.active .drum-cell {
+  background: #3b8ede;
+}
+
+.drum-cell.active {
+  background: #ff681d;
+}
+
+.frame.active .drum-cell.active {
+  background: #c34100;
+}
+
+a.button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 7px 12px;
+  background: #ff681d;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+a.button:hover {
+  background: #c34100;
+}
