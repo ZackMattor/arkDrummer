@@ -105,11 +105,16 @@ function arkDrum(context, kitsData, startBPM) {
   this.sequences = this.blankSequences();
   this.setActiveKit(0);
   this.GUI = new arkDrumGUI();
+  this.GUI.onSequenceSelect = this.setSequence; 
   this.GUI.initSequences(this.sequences);
 }
 
 arkDrum.prototype.blankSequences = function() {
   return [{name: "seq1"}, {name: "seq2"}]
+}
+
+arkDrum.prototype.setSequence = function(sequence) {
+  console.log('arkDrum: Setting Sequence to - ' + sequence);
 }
 
 arkDrum.prototype.setActiveKit = function(index) {
@@ -156,14 +161,17 @@ arkDrumGUI.prototype.initSequences = function(sequences) {
   for(var i = 0; i < sequences.length; i++) {
     $sequenceItem = $('<div></div>').addClass('sequenceItem').append(sequences[i].name);
     _this = this;
-    $sequenceItem.click(this.sequenceSelected);
+
+    //need to use an anon function to preserve self
+    $sequenceItem.click(function(){
+      $('#sequences .sequenceItem').removeClass('active');
+      $(this).addClass('active');
+      console.log('Emiting event: onSequenceSelect() -> ' + $(this).index());
+      if(_this.onSequenceSelect) _this.onSequenceSelect($(this).index());
+    });
+
     $sequenceHolder.append($sequenceItem);
   }
-}
-
-arkDrumGUI.prototype.sequenceSelected = function() {
-  console.log('Emiting event: onSequenceSelect() -> ' + $(this).index());
-  this.onSequenceSelect($(this).index());
 }
 
 /*********************/

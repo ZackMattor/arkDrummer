@@ -56,3 +56,13 @@ a.button {
 a.button:hover {
   background: #c34100;
 }
+
+.sequenceItem {
+  display: block;
+  color: black;
+  cursor: pointer;
+}
+
+.sequenceItem.active {
+  color: blue;
+}
