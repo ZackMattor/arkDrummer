@@ -46,7 +46,7 @@ var kit = [{name: 'Snare', file: 'snare.wav', image: 'snare.png'},
            {name: 'Kick', file: 'snare.wav', image: 'hho.png'},];
 
 function loadCanvas() {
-  var i, j;
+  /* var i, j;
 
   var $drumCell = $('<div></div>').addClass('drum-cell');
   var $drumFrame = $('<div></div>').addClass('frame');
@@ -61,7 +61,7 @@ function loadCanvas() {
   }
 
   $('.frame').css({'width': 637/frames-10+'px'});
-  $('.drum-cell').css({'height': 637/frames-10+'px'});
+  $('.drum-cell').css({'height': 637/frames-10+'px'}); */
 }
 
 function setCellActive() {
@@ -101,12 +101,16 @@ function arkDrum(context, kitsData, startBPM) {
   this.bpm = startBPM || 120;
   this.currentKit = null;
   this.kitsData = kitsData;
+  this.sequenceFrames = 8;
   this.audioContext = context;
   this.sequences = this.blankSequences();
   this.setActiveKit(0);
+
+  //init the GUI and set up callback events
   this.GUI = new arkDrumGUI();
   this.GUI.onSequenceSelect = this.setSequence; 
   this.GUI.initSequences(this.sequences);
+  this.GUI.initSequencer(this.kitsData[this.currentKit], this.sequenceFrames);
 }
 
 arkDrum.prototype.blankSequences = function() {
@@ -172,6 +176,25 @@ arkDrumGUI.prototype.initSequences = function(sequences) {
 
     $sequenceHolder.append($sequenceItem);
   }
+}
+
+arkDrumGUI.prototype.initSequencer = function(kit, frames) {
+  var i, j;
+
+  var $drumCell = $('<div></div>').addClass('drum-cell');
+  var $drumFrame = $('<div></div>').addClass('frame');
+
+  for(i=0; i<frames; i++) {
+    var $currentFrame = $drumFrame.clone();
+    $('.drum-canvas').append($currentFrame);
+
+    for(j=0; j<kit.length; j++) {
+      $currentFrame.append($drumCell.clone()).show();
+    }
+  }
+
+  $('.frame').css({'width': 637/frames-10+'px'});
+  $('.drum-cell').css({'height': 637/frames-10+'px'});
 }
 
 /*********************/
